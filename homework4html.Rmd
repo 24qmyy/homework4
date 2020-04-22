@@ -5,9 +5,15 @@
 
 ```{r}
 library(pacman)
-p_load(ggplot2movies)
+p_load(ggplot2movies,tidyverse)
 head(movies)
 ```
+
+```{r}
+movies %>% select(title:votes)
+movies %>% select(Action:Short)
+```
+
 
 ```{r}
 # Q2.
@@ -17,17 +23,24 @@ movies %>% select(starts_with("r"))
 movies %>% select(starts_with("or"))
 movies %>% select(starts_with("m"))
 ```
+
 ```{r}
 # Q3.
 #請將`iris`資料中數值欄位，全部改為英吋(即除以2.5)，
 #以及將`Species`欄位的資料全部轉為英文大寫，
 #並輸出資料集為`irisImperial`。
-iris
-
 iris %>%
   transmute(Sepal.Width=floor(Sepal.Width),
             Species = case_when(
               Species == "versicolor" ~ toupper(Species),
               TRUE ~ toupper(Species)
             ))
+
+irisImperial = iris
+head(irisImperial)
+irisImperial[,1:4] = iris[,1:4]/2.5
+irisImperial[, 5] = toupper(irisImperial[, 5])
+head(irisImperial)
+
+
 ```
